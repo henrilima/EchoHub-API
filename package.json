@@ -1,0 +1,28 @@
+{
+  "name": "echohub-server",
+  "version": "1.0.0",
+  "description": "A API de um projeto de chat em tempo real e autenticação, construída com Express, Firebase e Socket.IO. Este é um projeto pessoal de código aberto, criado com fins educacionais e para aprendizado.",
+  "main": "src/index.js",
+  "repository": "https://github.com/henrilima/echohub-api.git",
+  "author": "Henri Lima",
+  "license": "Apache-2.0",
+  "dependencies": {
+    "body-parser": "^1.20.3",
+    "cipher-sys": "^1.0.0",
+    "cloudinary": "^2.5.1",
+    "cors": "^2.8.5",
+    "express": "^4.21.1",
+    "firebase": "^11.0.2",
+    "multer": "^1.4.5-lts.1",
+    "nodemailer": "^6.9.16",
+    "socket.io": "^4.8.1"
+  },
+  "devDependencies": {
+    "dotenv": "^16.4.7",
+    "nodemon": "^3.1.7"
+  },
+  "scripts": {
+    "start": "nodemon src/index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  }
+}
