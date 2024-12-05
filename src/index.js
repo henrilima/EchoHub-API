@@ -15,14 +15,14 @@ const corsOptions = {
 
 const app = express();
 // Middleware para permitir cross-origin resource sharing (CORS)
-app.use(cors());
+app.use(cors(corsOptions));
 
 // Criar servidor HTTP
 const server = http.createServer(app);
 
 // Conectar o Socket.IO ao servidor
 const io = new Server(server, {
-    cors: corsOptions,
+    cors: { ...corsOptions, transports: ["websocket", "polling"], credentials: true },
 });
 
 // Middleware para tratar e converter dados do corpo da requisição
