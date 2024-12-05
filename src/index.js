@@ -17,8 +17,10 @@ const server = http.createServer(app);
 // Conectar o Socket.IO ao servidor
 const io = new Server(server, {
     cors: {
-        origin: 'http://localhost:8080',
+        origin: "http://localhost:8080",
         methods: ["GET", "POST"],
+        allowedHeaders: ["my-custom-header"],
+        credentials: true,
     },
 });
 
@@ -38,8 +40,14 @@ app.get("/", function (req, res) {
 
 // Configuração do Socket.IO
 io.on("connection", (socket) => {
+    console.log("Usuário conectado:", socket.id);
+
     socket.on("sendMessage", (message) => {
         io.emit("receiveMessage", message);
+    });
+
+    socket.on("disconnect", () => {
+        console.log("Usuário desconectado:", socket.id);
     });
 });
 
