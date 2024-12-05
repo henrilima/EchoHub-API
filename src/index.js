@@ -17,9 +17,9 @@ const server = http.createServer(app);
 // Conectar o Socket.IO ao servidor
 const io = new Server(server, {
     cors: {
-        origin: "http://localhost:8080",
+        origin: "https://echohub-tau.vercel.app",
         methods: ["GET", "POST"],
-        allowedHeaders: ["my-custom-header"],
+        allowedHeaders: [],
         credentials: true,
     },
 });
