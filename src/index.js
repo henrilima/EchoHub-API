@@ -17,9 +17,8 @@ const server = http.createServer(app);
 // Conectar o Socket.IO ao servidor
 const io = new Server(server, {
     cors: {
-        origin: true,
+        origin: 'http://localhost:8080',
         methods: ["GET", "POST"],
-        credentials: true,
     },
 });
 
