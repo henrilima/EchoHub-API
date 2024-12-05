@@ -2,13 +2,14 @@ require("dotenv").config();
 const cors = require("cors");
 const express = require("express");
 const bodyParser = require("body-parser");
-const { database } = require("./firebase");
 const { Server } = require("socket.io");
 const http = require("http");
 
 const PORT = process.env.PORT || 3000;
 
 const app = express();
+// Middleware para permitir cross-origin resource sharing (CORS)
+app.use(cors());
 
 // Criar servidor HTTP
 const server = http.createServer(app);
@@ -16,13 +17,11 @@ const server = http.createServer(app);
 // Conectar o Socket.IO ao servidor
 const io = new Server(server, {
     cors: {
-        origin: "*",
+        origin: true,
         methods: ["GET", "POST"],
+        credentials: true,
     },
 });
-
-// Middleware para permitir cross-origin resource sharing (CORS)
-app.use(cors());
 
 // Middleware para tratar e converter dados do corpo da requisição
 app.use(bodyParser.json({ limit: "5mb" }));
