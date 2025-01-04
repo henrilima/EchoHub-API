@@ -2,27 +2,23 @@ require("dotenv").config();
 const cors = require("cors");
 const express = require("express");
 const bodyParser = require("body-parser");
-const { Server } = require("socket.io");
 const http = require("http");
 
-const PORT = process.env.PORT || 3000;
-
-const corsOptions = {
-    origin: "https://echohub-tau.vercel.app",
-    methods: ["GET", "POST"],
-    allowedHeaders: ["Content-Type", "Authorization"],
-};
+const PORT = process.env.PORT || 8080;
 
 const app = express();
 // Middleware para permitir cross-origin resource sharing (CORS)
-app.use(cors(corsOptions));
+app.use(cors());
 
 // Criar servidor HTTP
 const server = http.createServer(app);
 
 // Conectar o Socket.IO ao servidor
-const io = new Server(server, {
-    cors: { ...corsOptions, transports: ["websocket", "polling"], credentials: true },
+const io = new require("socket.io")(server, {
+    cors: {
+        origin: "https://echohub-tau.vercel.app",
+        methods: ["GET", "POST"],
+    },
 });
 
 // Middleware para tratar e converter dados do corpo da requisição
