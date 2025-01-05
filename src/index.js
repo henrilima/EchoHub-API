@@ -8,7 +8,11 @@ const PORT = process.env.PORT || 8080;
 
 const app = express();
 // Middleware para permitir cross-origin resource sharing (CORS)
-app.use(cors());
+app.use(cors({
+    origin: "https://echohub-tau.vercel.app",
+    methods: ["GET", "POST"],
+    credentials: true
+}));
 
 // Criar servidor HTTP
 const server = http.createServer(app);
@@ -18,6 +22,7 @@ const io = new require("socket.io")(server, {
     cors: {
         origin: "https://echohub-tau.vercel.app",
         methods: ["GET", "POST"],
+        credentials: true
     },
 });
 
