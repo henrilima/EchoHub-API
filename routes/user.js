@@ -270,14 +270,15 @@ router.post("/verify", async (req, res, next) => {
                     user = findUser[Object.keys(findUser)[0]];
 
                     if (user.verificationcode === verificationcode) {
-                        update(ref(database, "users/" + user.userid), {
+                        await remove(
+                            ref(database, "logNotVerifiedAccounts/" + user.id)
+                        );
+                        
+                        await update(ref(database, "users/" + user.userid), {
                             verified: true,
                             verifiedIn: new Date().toISOString(),
                         });
-
-                        remove(
-                            ref(database, "logNotVerifiedAccounts/" + user.id)
-                        );
+                        
 
                         transporter.sendMail({
                             from: "EchoHub by Cipher <cipherauthenticator@gmail.com>",
@@ -290,7 +291,7 @@ router.post("/verify", async (req, res, next) => {
                                 <p>Estamos felizes em informar que sua conta foi <strong style="color: ${styles.orange};">verificada e validada</strong> com sucesso! Agora você pode acessar todos os recursos da EchoHub sem restrições.</p>
                                 <p>Se precisar de ajuda ou tiver dúvidas, estamos sempre à disposição. Entre em contato conosco a qualquer momento.</p>
                                 <div style="text-align: center; margin: 16px 0;">
-                                    <a href="${req.protocol}://${req.hostname}" 
+                                    <a href="https://echohub-tau.vercel.app/" 
                                        style="display: inline-block; padding: 10px 20px; color: ${styles.white}; background-color: ${styles.btnBlurple}; border-radius: 5px; text-decoration: none; font-size: 14px; font-weight: 600;">
                                        Ir para EchoHub
                                     </a>
@@ -390,10 +391,7 @@ router.post("/resetpassword", async (req, res) => {
                             user.username
                         }</strong>. Recebemos uma solicitação para redefinir sua senha. Caso tenha sido você, clique no botão abaixo para redefini-la:</p>
                             <div style="text-align: center; margin: 16px 0;">
-                                <a href="${req.protocol}://${
-                            req.hostname +
-                            (req.hostname === "localhost" ? ":8080" : "")
-                        }/changepassword?request=${request.id}"
+                                <a href="https://echohub-tau.vercel.app/changepassword?request=${request.id}"
                                 style="display: inline-block; padding: 10px 20px; color: ${
                                     styles.white
                                 }; background-color: ${
